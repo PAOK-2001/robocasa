@@ -1,0 +1,46 @@
+[project]
+name = "robocasa"
+version = "1.0.1"
+description = "RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots"
+readme = "README.md"
+authors = [
+    { name = "Soroush Nasiriany" },
+    { name = "Sepehr Nasiriany" },
+    { name = "Abhiram Maddukuri", email = "abhicm@utexas.edu" },
+    { name = "Yuke Zhu" },
+]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy==2.2.5",
+    "numba==0.61.2",
+    "scipy==1.15.3",
+    "mujoco==3.3.1",
+    "pygame",
+    "Pillow",
+    "opencv-python",
+    "pyyaml",
+    "pynput",
+    "tqdm",
+    "termcolor",
+    "imageio",
+    "h5py",
+    "lxml",
+    "hidapi",
+    "tianshou==0.4.10",
+    "lerobot==0.3.3",
+    "gymnasium",
+    "robosuite",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+robosuite = { git = "https://github.com/ARISE-Initiative/robosuite", branch = "master" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["robocasa"]
+
+[tool.hatch.build.targets.sdist]
+include = ["robocasa/**", "pyproject.toml", "README.md", "LICENSE*"]
