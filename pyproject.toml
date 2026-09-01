@@ -36,8 +36,38 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+# Runtime deps of the langskill-tokens policy stack (src/eval_policy_robocasa.py runs in this env with
+# PYTHONPATH=<repo>/src, because LIBERO pins robosuite 1.4 / numpy 1.26 in the main env).
+[dependency-groups]
+langskill = [
+    "torch>=2.7.1",
+    "torchvision>=0.22.1",
+    "hydra-core>=1.3.2",
+    "loguru>=0.7.3",
+    "transformers>=4.52.4",
+    "positional-encodings>=6.0.3",
+    "vector-quantize-pytorch>=1.22.17",
+    "scikit-learn>=1.7.0",
+    "hdbscan>=0.8.40",
+    "nvidia-ml-py3>=7.352.0",
+    "trimesh>=4.6.10",
+    "urdf-parser-py>=0.0.4",
+    "wandb[media]>=0.20.1",
+]
+
+[tool.uv]
+default-groups = ["langskill"]
+
+# Blackwell (sm_120) GPUs need the cu128 builds; the default PyPI cu126 wheels have no kernels for them.
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
 [tool.uv.sources]
 robosuite = { git = "https://github.com/ARISE-Initiative/robosuite", branch = "master" }
+torch = [{ index = "pytorch-cu128", marker = "sys_platform == 'linux'" }]
+torchvision = [{ index = "pytorch-cu128", marker = "sys_platform == 'linux'" }]
 
 [tool.hatch.build.targets.wheel]
 packages = ["robocasa"]
