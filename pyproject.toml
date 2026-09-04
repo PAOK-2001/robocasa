@@ -53,6 +53,9 @@ langskill = [
     "trimesh>=4.6.10",
     "urdf-parser-py>=0.0.4",
     "wandb[media]>=0.20.1",
+    "matplotlib>=3.11.1",
+    "egl-probe>=1.0.2",
+    "tensorboardx>=2.6",
 ]
 
 [tool.uv]
